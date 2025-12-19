@@ -1,5 +1,7 @@
 ﻿using System.Windows;
+
 using Microsoft.Extensions.DependencyInjection;
+
 using ViveGui.Services;
 using ViveGui.Services.Backend;
 using ViveGui.ViewModels;

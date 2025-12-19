@@ -7,8 +7,8 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <!-- 引入 WPF UI 控件样式 -->
-                <ui:ThemesDictionary Theme="Light" />
-                <ui:ControlsDictionary />
+                <ui:ThemesDictionary/>
+                <ui:ControlsDictionary/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -1,9 +1,12 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Collections.ObjectModel;
+
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
+
 using ViveGui.Models;
 using ViveGui.Services;
 using ViveGui.Services.Backend;
+
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 

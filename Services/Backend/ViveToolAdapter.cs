@@ -1,5 +1,6 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text;
+
 using ViveGui.Models;
 
 namespace ViveGui.Services.Backend;

@@ -1,4 +1,4 @@
-namespace ViveGui.Models;
+﻿namespace ViveGui.Models;
 
 public enum ActionType
 {

@@ -8,8 +8,9 @@
                  xmlns:conv="clr-namespace:ViveGui.Converters"
                  d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
                  mc:Ignorable="d"
-                 Title="ViVeTool GUI Wrapper" 
-                 Height="650" Width="850"
+                 Title="ViVeTool GUI Wrapper"
+                 Height="650"
+                 Width="850"
                  ExtendsContentIntoTitleBar="True"
                  WindowBackdropType="Mica">
 
@@ -30,41 +31,44 @@
         </Grid.RowDefinitions>
 
         <!-- 0. 自定义标题栏 (WinUI 风格必须) -->
-        <ui:TitleBar Grid.Row="0" Title="ViVeTool GUI Wrapper" />
+        <ui:TitleBar Grid.Row="0"
+                     Title="ViVeTool GUI Wrapper"/>
 
         <!-- 1. Input Area -->
-        <Grid Grid.Row="1" Margin="20,10,20,15">
+        <Grid Grid.Row="1"
+              Margin="20,10,20,15">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <ComboBox Grid.Column="0" 
-                      ItemsSource="{Binding ActionTypes}" 
+            <ComboBox Grid.Column="0"
+                      ItemsSource="{Binding ActionTypes}"
                       SelectedItem="{Binding SelectedAction}"
-                      Width="120" Margin="0,0,10,0" 
+                      Width="120"
+                      Margin="0,0,10,0"
                       VerticalAlignment="Center"/>
 
             <!-- 使用 PlaceholderText 代替 ToolTip，更符合现代 UI -->
-            <ui:TextBox Grid.Column="1" 
-                        Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}" 
+            <ui:TextBox Grid.Column="1"
+                        Text="{Binding InputText, UpdateSourceTrigger=PropertyChanged}"
                         PlaceholderText="Enter IDs here (e.g. '12345 67890+1')"
-                        VerticalAlignment="Center" 
+                        VerticalAlignment="Center"
                         Icon="{ui:SymbolIcon Edit16}"/>
 
             <!-- 普通操作按钮 -->
-            <ui:Button Grid.Column="2" 
-                       Command="{Binding AddCommand}" 
+            <ui:Button Grid.Column="2"
+                       Command="{Binding AddCommand}"
                        Content="Add to Queue"
                        Icon="{ui:SymbolIcon Add24}"
-                       Margin="10,0,0,0" />
+                       Margin="10,0,0,0"/>
         </Grid>
 
         <!-- 2. Data Grid -->
-        <DataGrid Grid.Row="2" 
-                  ItemsSource="{Binding Instructions}" 
-                  AutoGenerateColumns="False" 
+        <DataGrid Grid.Row="2"
+                  ItemsSource="{Binding Instructions}"
+                  AutoGenerateColumns="False"
                   CanUserAddRows="False"
                   IsReadOnly="True"
                   HeadersVisibility="Column"
@@ -74,40 +78,52 @@
                   BorderBrush="{DynamicResource ControlElevationBorderBrush}">
 
             <DataGrid.RowStyle>
-                <Style TargetType="DataGridRow" BasedOn="{StaticResource {x:Type DataGridRow}}">
-                    <Setter Property="VerticalContentAlignment" Value="Center"/>
-                    <Setter Property="Background" Value="{Binding Status, Converter={StaticResource StatusToBrushConverter}}"/>
+                <Style TargetType="DataGridRow"
+                       BasedOn="{StaticResource {x:Type DataGridRow}}">
+                    <Setter Property="VerticalContentAlignment"
+                            Value="Center"/>
+                    <Setter Property="Background"
+                            Value="{Binding Status, Converter={StaticResource StatusToBrushConverter}}"/>
                 </Style>
             </DataGrid.RowStyle>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID &amp; Variant" Binding="{Binding GetIdString}" Width="2*"/>
+                <DataGridTextColumn Header="ID &amp; Variant"
+                                    Binding="{Binding GetIdString}"
+                                    Width="2*"/>
 
-                <DataGridTemplateColumn Header="Action" Width="1*">
+                <DataGridTemplateColumn Header="Action"
+                                        Width="1*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <!-- 使用卡片式标签展示 Action -->
-                            <Border Background="{DynamicResource ControlSolidFillColorDefaultBrush}" 
-                                    CornerRadius="4" Padding="8,2" HorizontalAlignment="Left">
+                            <Border Background="{DynamicResource ControlSolidFillColorDefaultBrush}"
+                                    CornerRadius="4"
+                                    Padding="8,2"
+                                    HorizontalAlignment="Left">
                                 <TextBlock Text="{Binding Action}"/>
                             </Border>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="1.5*"/>
+                <DataGridTextColumn Header="Status"
+                                    Binding="{Binding Status}"
+                                    Width="1.5*"/>
 
                 <!-- 操作列: 使用图标按钮 -->
-                <DataGridTemplateColumn Header="Ops" Width="Auto">
+                <DataGridTemplateColumn Header="Ops"
+                                        Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ui:Button Command="{Binding DataContext.RemoveRowCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" 
-                                       CommandParameter="{Binding}" 
+                            <ui:Button Command="{Binding DataContext.RemoveRowCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                       CommandParameter="{Binding}"
                                        Appearance="Secondary"
                                        Icon="{ui:SymbolIcon Delete24}"
                                        Padding="5"
                                        ToolTip="Remove"
-                                       BorderThickness="0" Background="Transparent"/>
+                                       BorderThickness="0"
+                                       Background="Transparent"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -116,9 +132,9 @@
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
                     <!-- 使用 CardControl 或者带有圆角的 Border -->
-                    <Border Margin="10,5,10,10" 
-                            Background="{DynamicResource LayerOnMicaBaseAltFillColorDefaultBrush}" 
-                            CornerRadius="4" 
+                    <Border Margin="10,5,10,10"
+                            Background="{DynamicResource LayerOnMicaBaseAltFillColorDefaultBrush}"
+                            CornerRadius="4"
                             Padding="10">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -126,12 +142,15 @@
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
-                            <ui:SymbolIcon Symbol="Code24" Margin="0,0,10,0" VerticalAlignment="Top" Foreground="Gray"/>
+                            <ui:SymbolIcon Symbol="Code24"
+                                           Margin="0,0,10,0"
+                                           VerticalAlignment="Top"
+                                           Foreground="Gray"/>
 
                             <TextBox Grid.Column="1"
-                                     Text="{Binding OutputText, Mode=OneWay}" 
-                                     IsReadOnly="True" 
-                                     TextWrapping="Wrap" 
+                                     Text="{Binding OutputText, Mode=OneWay}"
+                                     IsReadOnly="True"
+                                     TextWrapping="Wrap"
                                      FontFamily="Consolas"
                                      BorderThickness="0"
                                      Background="Transparent"
@@ -144,29 +163,33 @@
         </DataGrid>
 
         <!-- 3. Action Area -->
-        <Border Grid.Row="3" 
-                Background="{DynamicResource SolidBackgroundFillColorBaseBrush}" 
-                BorderThickness="0,1,0,0" 
+        <Border Grid.Row="3"
+                Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
+                BorderThickness="0,1,0,0"
                 BorderBrush="{DynamicResource SurfaceStrokeColorDefaultBrush}"
                 Padding="20,15">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right">
 
                 <!-- 清除按钮：次要操作 -->
-                <ui:Button Content="Clear All" 
-                           Command="{Binding ClearCommand}" 
+                <ui:Button Content="Clear All"
+                           Command="{Binding ClearCommand}"
                            Icon="{ui:SymbolIcon Dismiss24}"
                            Appearance="Secondary"
-                           Margin="0,0,10,0" MinWidth="100"/>
+                           Margin="0,0,10,0"
+                           MinWidth="100"/>
 
                 <!-- 执行按钮：主要操作 (高亮显示) -->
-                <ui:Button Content="Execute Batch" 
-                           Command="{Binding RunCommand}" 
+                <ui:Button Content="Execute Batch"
+                           Command="{Binding RunCommand}"
                            Icon="{ui:SymbolIcon Play24}"
                            Appearance="Primary"
                            MinWidth="120"/>
             </StackPanel>
         </Border>
 
-        <ContentPresenter x:Name="RootContentDialog" Grid.Row="0" Grid.RowSpan="4" />
+        <ContentPresenter x:Name="RootContentDialog"
+                          Grid.Row="0"
+                          Grid.RowSpan="4"/>
     </Grid>
 </ui:FluentWindow>
