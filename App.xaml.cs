@@ -11,7 +11,8 @@ namespace ViveGui;
 
 public partial class App : Application
 {
-    public new static App Current => (App)Application.Current;
+    public new static App Current
+        => (App)Application.Current;
     public IServiceProvider? Services { get; private set; }
 
     protected override async void OnStartup(StartupEventArgs e)

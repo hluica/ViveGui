@@ -22,8 +22,10 @@ public class IdStringParser
         uint? variant = null;
         if (parts.Length > 1)
         {
-            if (uint.TryParse(parts[1], out uint v)) variant = v;
-            else return null;
+            if (uint.TryParse(parts[1], out uint v))
+                variant = v;
+            else
+                return null;
         }
         return (id, variant);
     }

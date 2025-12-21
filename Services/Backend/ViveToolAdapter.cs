@@ -8,9 +8,7 @@ namespace ViveGui.Services.Backend;
 public class ViveToolAdapter : IViveToolAdapter
 {
     public async Task<string> QuerySingleAsync(uint id)
-    {
-        return await RunProcessAsync($"/query /id:{id}");
-    }
+        => await RunProcessAsync($"/query /id:{id}");
 
     public async Task ExecuteBatchAsync(List<InstructionRow> rows)
     {

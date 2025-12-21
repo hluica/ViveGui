@@ -29,9 +29,11 @@ public partial class MainViewModel(IViveToolAdapter adapter, IdStringParser pars
     private ActionType _selectedAction = ActionType.Query;
 
     // 提供给下拉菜单的数据源
-    public static IEnumerable<ActionType> ActionTypes => Enum.GetValues<ActionType>();
+    public static IEnumerable<ActionType> ActionTypes
+        => Enum.GetValues<ActionType>();
 
-    public void SetDialogService(IContentDialogService service) => _contentDialogService = service;
+    public void SetDialogService(IContentDialogService service)
+        => _contentDialogService = service;
 
     // 界面锁定状态
     [ObservableProperty]
@@ -43,7 +45,8 @@ public partial class MainViewModel(IViveToolAdapter adapter, IdStringParser pars
     private void Add()
     {
         var ids = _parser.ParseIds(InputText);
-        if (ids.Count == 0) return;
+        if (ids.Count == 0)
+            return;
 
         foreach (var (id, variant) in ids)
         {
@@ -105,10 +108,13 @@ public partial class MainViewModel(IViveToolAdapter adapter, IdStringParser pars
     }
 
     [RelayCommand(CanExecute = nameof(CanInteract))]
-    private void Clear() => Instructions.Clear();
+    private void Clear()
+        => Instructions.Clear();
 
     [RelayCommand]
-    private void RemoveRow(InstructionRow row) => Instructions.Remove(row);
+    private void RemoveRow(InstructionRow row)
+        => Instructions.Remove(row);
 
-    private bool CanInteract() => !IsBusy;
+    private bool CanInteract()
+        => !IsBusy;
 }
