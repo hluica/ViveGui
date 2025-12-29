@@ -14,8 +14,8 @@ public class ViveToolAdapter : IViveToolAdapter
     {
         static async Task RunAndUpdateAsync(string args, IEnumerable<InstructionRow> targetRows)
         {
-            var output = await RunProcessAsync(args);
-            var isError = output.Contains("Failed", StringComparison.OrdinalIgnoreCase) ||
+            string output = await RunProcessAsync(args);
+            bool isError = output.Contains("Failed", StringComparison.OrdinalIgnoreCase) ||
                           output.Contains("Error", StringComparison.OrdinalIgnoreCase);
             var newStatus = isError ? RowStatus.Error : RowStatus.Configured;
 
@@ -60,17 +60,26 @@ public class ViveToolAdapter : IViveToolAdapter
         {
             using var process = new Process { StartInfo = psi };
             var outputBuilder = new StringBuilder();
-            process.OutputDataReceived += (s, e) => { if (e.Data != null) outputBuilder.AppendLine(e.Data); };
-            process.ErrorDataReceived += (s, e) => { if (e.Data != null) outputBuilder.AppendLine(e.Data); };
+            process.OutputDataReceived += (s, e) =>
+            {
+                if (e.Data != null)
+                    outputBuilder.AppendLine(e.Data);
+            };
+            process.ErrorDataReceived += (s, e) =>
+            {
+                if (e.Data != null)
+                    outputBuilder.AppendLine(e.Data);
+            };
 
             process.Start();
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
             await process.WaitForExitAsync();
 
-            var lines = outputBuilder.ToString().Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
-            if (lines.Length >= 2) return string.Join(Environment.NewLine, lines.Skip(1)).Trim();
-            return outputBuilder.ToString().Trim();
+            string[] lines = outputBuilder.ToString().Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
+            return lines.Length >= 2
+                ? string.Join(Environment.NewLine, lines.Skip(1)).Trim()
+                : outputBuilder.ToString().Trim();
         }
         catch (Exception ex)
         {

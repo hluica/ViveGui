@@ -15,5 +15,6 @@ public partial class InstructionRow : ObservableObject
     [ObservableProperty]
     private RowStatus _status = RowStatus.Initializing;
 
-    public string GetIdString => Variant.HasValue ? $"{Id} (Var: {Variant})" : $"{Id}";
+    public string GetIdString
+        => Variant.HasValue ? $"{Id} (Var: {Variant})" : $"{Id}";
 }

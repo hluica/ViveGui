@@ -52,7 +52,8 @@ public partial class MainViewModel(IViveToolAdapter adapter, IdStringParser pars
         {
             // 简单去重逻辑：移除已存在的相同 ID 行
             var existing = Instructions.FirstOrDefault(x => x.Id == id && x.Variant == variant);
-            if (existing != null) Instructions.Remove(existing);
+            if (existing != null)
+                Instructions.Remove(existing);
 
             Instructions.Add(new InstructionRow
             {
@@ -75,7 +76,7 @@ public partial class MainViewModel(IViveToolAdapter adapter, IdStringParser pars
     {
         IsBusy = true;
         var executableRows = Instructions
-            .Where(r => r.Action == ActionType.Enable || r.Action == ActionType.Reset)
+            .Where(r => r.Action is ActionType.Enable or ActionType.Reset)
             .ToList();
 
         if (executableRows.Count > 0)
