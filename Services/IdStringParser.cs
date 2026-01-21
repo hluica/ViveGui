@@ -1,6 +1,11 @@
 ﻿namespace ViveGui.Services;
 
-public class IdStringParser
+public interface IIdStringParser
+{
+    List<(uint Id, uint? Variant)> ParseIds(string input);
+}
+
+public class IdStringParser : IIdStringParser
 {
     public List<(uint Id, uint? Variant)> ParseIds(string input)
         => string.IsNullOrWhiteSpace(input)

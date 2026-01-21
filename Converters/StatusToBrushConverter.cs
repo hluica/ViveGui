@@ -8,7 +8,7 @@ namespace ViveGui.Converters;
 
 public class StatusToBrushConverter : IValueConverter
 {
-    private const double BrushOpacity = 0.25;
+    private const double BRUSH_OPACITY = 0.25;
 
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         => value is RowStatus status
@@ -32,7 +32,7 @@ public class StatusToBrushConverter : IValueConverter
     {
         var brush = new SolidColorBrush(baseColor)
         {
-            Opacity = BrushOpacity
+            Opacity = BRUSH_OPACITY
         };
 
         if (brush.CanFreeze)

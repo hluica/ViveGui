@@ -8,7 +8,6 @@ public partial class InstructionRow : ObservableObject
     public uint? Variant { get; set; }
     public ActionType Action { get; set; }
 
-    // 使用 CommunityToolkit 自动生成 OnPropertyChanged 代码
     [ObservableProperty]
     private string _outputText = "Initializing...";
 

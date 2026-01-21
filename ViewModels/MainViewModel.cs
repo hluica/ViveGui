@@ -12,10 +12,10 @@ using Wpf.Ui.Controls;
 
 namespace ViveGui.ViewModels;
 
-public partial class MainViewModel(IViveToolAdapter adapter, IdStringParser parser) : ObservableObject
+public partial class MainViewModel(IViveToolAdapter adapter, IIdStringParser parser) : ObservableObject
 {
     private readonly IViveToolAdapter _adapter = adapter;
-    private readonly IdStringParser _parser = parser;
+    private readonly IIdStringParser _parser = parser;
     private IContentDialogService? _contentDialogService;
 
     [ObservableProperty]
@@ -53,7 +53,7 @@ public partial class MainViewModel(IViveToolAdapter adapter, IdStringParser pars
             // 简单去重逻辑：移除已存在的相同 ID 行
             var existing = Instructions.FirstOrDefault(x => x.Id == id && x.Variant == variant);
             if (existing != null)
-                Instructions.Remove(existing);
+                _ = Instructions.Remove(existing);
 
             Instructions.Add(new InstructionRow
             {
@@ -80,9 +80,7 @@ public partial class MainViewModel(IViveToolAdapter adapter, IdStringParser pars
             .ToList();
 
         if (executableRows.Count > 0)
-        {
             await _adapter.ExecuteBatchAsync(executableRows);
-        }
         IsBusy = false;
 
         if (_contentDialogService != null)
@@ -94,7 +92,7 @@ public partial class MainViewModel(IViveToolAdapter adapter, IdStringParser pars
                 CloseButtonText = "OK",
                 CloseButtonAppearance = ControlAppearance.Primary
             };
-            await _contentDialogService.ShowAsync(dialog, CancellationToken.None);
+            _ = await _contentDialogService.ShowAsync(dialog, CancellationToken.None);
         }
     }
 

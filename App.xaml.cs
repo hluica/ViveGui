@@ -36,7 +36,7 @@ public partial class App : Application
                 // 设置窗口居中显示，因为此时没有主窗口作为 owner
                 WindowStartupLocation = WindowStartupLocation.CenterScreen
             };
-            await uiMessageBox.ShowDialogAsync();
+            _ = await uiMessageBox.ShowDialogAsync();
 
             Shutdown();
             return;
@@ -48,16 +48,10 @@ public partial class App : Application
     }
 
     private static void ConfigureServices(IServiceCollection services)
-    {
-        // Models & Services
-        services.AddSingleton<IViveToolAdapter, ViveToolAdapter>();
-        services.AddSingleton<EnvironmentService>();
-        services.AddSingleton<IdStringParser>();
-
-        // ViewModels
-        services.AddSingleton<MainViewModel>();
-
-        // Views
-        services.AddSingleton<MainWindow>();
-    }
+        => _ = services
+            .AddSingleton<EnvironmentService>()
+            .AddSingleton<IViveToolAdapter, ViveToolAdapter>()
+            .AddSingleton<IIdStringParser, IdStringParser>()
+            .AddSingleton<MainViewModel>()
+            .AddSingleton<MainWindow>();
 }

@@ -15,8 +15,8 @@ public class ViveToolAdapter : IViveToolAdapter
         static async Task RunAndUpdateAsync(string args, IEnumerable<InstructionRow> targetRows)
         {
             string output = await RunProcessAsync(args);
-            bool isError = output.Contains("Failed", StringComparison.OrdinalIgnoreCase) ||
-                          output.Contains("Error", StringComparison.OrdinalIgnoreCase);
+            bool isError = output.Contains("Failed", StringComparison.OrdinalIgnoreCase)
+                || output.Contains("Error", StringComparison.OrdinalIgnoreCase);
             var newStatus = isError ? RowStatus.Error : RowStatus.Configured;
 
             foreach (var row in targetRows)
@@ -39,9 +39,7 @@ public class ViveToolAdapter : IViveToolAdapter
         var allTasks = resetTasks.Concat(enableTasks);
 
         foreach (var (Args, Rows) in allTasks)
-        {
             await RunAndUpdateAsync(Args, Rows);
-        }
     }
 
     private static async Task<string> RunProcessAsync(string arguments)
@@ -63,15 +61,15 @@ public class ViveToolAdapter : IViveToolAdapter
             process.OutputDataReceived += (s, e) =>
             {
                 if (e.Data != null)
-                    outputBuilder.AppendLine(e.Data);
+                    _ = outputBuilder.AppendLine(e.Data);
             };
             process.ErrorDataReceived += (s, e) =>
             {
                 if (e.Data != null)
-                    outputBuilder.AppendLine(e.Data);
+                    _ = outputBuilder.AppendLine(e.Data);
             };
 
-            process.Start();
+            _ = process.Start();
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
             await process.WaitForExitAsync();
