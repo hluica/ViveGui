@@ -9,6 +9,9 @@
     Width="850"
     Height="650"
     ExtendsContentIntoTitleBar="True"
+    ResizeMode="CanResize"
+    SnapsToDevicePixels="True"
+    UseLayoutRounding="True"
     WindowBackdropType="Mica">
 
     <Window.Resources>
@@ -17,14 +20,14 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <!--  Custom TitleBar  -->
             <RowDefinition Height="Auto" />
             <!--  Input Area  -->
-            <RowDefinition Height="*" />
-            <!--  Data Grid  -->
             <RowDefinition Height="Auto" />
+            <!--  Data Grid  -->
+            <RowDefinition Height="*" />
             <!--  Action Area  -->
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <!--  0. 自定义标题栏 (WinUI 风格必须)  -->
@@ -72,7 +75,8 @@
             Grid.Row="2"
             Margin="20,0,20,0"
             AutoGenerateColumns="False"
-            BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+            Background="{ui:ThemeResource CardBackgroundFillColorSecondaryBrush}"
+            BorderBrush="{ui:ThemeResource ControlElevationBorderBrush}"
             BorderThickness="1"
             CanUserAddRows="False"
             HeadersVisibility="Column"
@@ -104,7 +108,7 @@
                             <Border
                                 Padding="8,2"
                                 HorizontalAlignment="Left"
-                                Background="{DynamicResource ControlSolidFillColorDefaultBrush}"
+                                Background="{ui:ThemeResource ControlSolidFillColorDefaultBrush}"
                                 CornerRadius="4">
                                 <TextBlock Text="{Binding Action}" />
                             </Border>
@@ -143,7 +147,7 @@
                     <Border
                         Margin="10,5,10,10"
                         Padding="10"
-                        Background="{DynamicResource LayerOnMicaBaseAltFillColorDefaultBrush}"
+                        Background="{ui:ThemeResource LayerOnMicaBaseAltFillColorDefaultBrush}"
                         CornerRadius="4">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -177,8 +181,8 @@
         <Border
             Grid.Row="3"
             Padding="20,15"
-            Background="{DynamicResource SolidBackgroundFillColorBaseBrush}"
-            BorderBrush="{DynamicResource SurfaceStrokeColorDefaultBrush}"
+            Background="{ui:ThemeResource SolidBackgroundFillColorBaseBrush}"
+            BorderBrush="{ui:ThemeResource SurfaceStrokeColorDefaultBrush}"
             BorderThickness="0,1,0,0">
             <StackPanel
                 HorizontalAlignment="Right"
@@ -202,10 +206,5 @@
                     Icon="{ui:SymbolIcon Play24}" />
             </StackPanel>
         </Border>
-
-        <ContentPresenter
-            x:Name="RootContentDialog"
-            Grid.Row="0"
-            Grid.RowSpan="4" />
     </Grid>
 </ui:FluentWindow>

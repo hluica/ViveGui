@@ -1,4 +1,4 @@
-# ViveGui
+﻿# ViveGui
 
 轻量的 [Vivetool](https://github.com/thebookisclosed/ViVe) 图形前端，提供图形化的操作和信息显示。特点：
 - 从系统 path 环境变量查找 vivetool，实现前后端彻底分离。
@@ -40,6 +40,10 @@
 
 - v1.0.0 首个稳定可用版本
 - v1.1.1 增加深色模式支持
+- v1.2.0 更新依赖。
+
+> [!Note]
+> v1.2.0: 当前版本对 WPF-UI (v4.2.0) 的 ContentDialogHost 功能缺乏支持。因此，移除了操作执行后的对话框提示。
 
 ## 许可证
 [MIT License](LICENSE.txt)

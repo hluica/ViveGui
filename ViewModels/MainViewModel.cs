@@ -7,16 +7,12 @@ using ViveGui.Models;
 using ViveGui.Services;
 using ViveGui.Services.Backend;
 
-using Wpf.Ui;
-using Wpf.Ui.Controls;
-
 namespace ViveGui.ViewModels;
 
 public partial class MainViewModel(IViveToolAdapter adapter, IIdStringParser parser) : ObservableObject
 {
     private readonly IViveToolAdapter _adapter = adapter;
     private readonly IIdStringParser _parser = parser;
-    private IContentDialogService? _contentDialogService;
 
     [ObservableProperty]
     private ObservableCollection<InstructionRow> _instructions = [];
@@ -31,9 +27,6 @@ public partial class MainViewModel(IViveToolAdapter adapter, IIdStringParser par
     // 提供给下拉菜单的数据源
     public static IEnumerable<ActionType> ActionTypes
         => Enum.GetValues<ActionType>();
-
-    public void SetDialogService(IContentDialogService service)
-        => _contentDialogService = service;
 
     // 界面锁定状态
     [ObservableProperty]
@@ -82,18 +75,6 @@ public partial class MainViewModel(IViveToolAdapter adapter, IIdStringParser par
         if (executableRows.Count > 0)
             await _adapter.ExecuteBatchAsync(executableRows);
         IsBusy = false;
-
-        if (_contentDialogService != null)
-        {
-            var dialog = new ContentDialog()
-            {
-                Title = "Done",
-                Content = "Batch execution finished.",
-                CloseButtonText = "OK",
-                CloseButtonAppearance = ControlAppearance.Primary
-            };
-            _ = await _contentDialogService.ShowAsync(dialog, CancellationToken.None);
-        }
     }
 
     private async Task RunQueryAsync(List<uint> ids)
