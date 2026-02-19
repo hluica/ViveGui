@@ -45,5 +45,7 @@
 > [!Note]
 > v1.2.0: 当前版本对 WPF-UI (v4.2.0) 的 ContentDialogHost 功能缺乏支持。因此，移除了操作执行后的对话框提示。
 
+- v1.2.1 更新依赖。
+
 ## 许可证
-[MIT License](LICENSE.txt)
+[MIT](LICENSE.txt)
