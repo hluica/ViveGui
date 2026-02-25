@@ -166,6 +166,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
                             <ui:SymbolIcon
@@ -184,6 +185,18 @@
                                 Text="{Binding OutputText, Mode=OneWay}"
                                 TextWrapping="Wrap"
                                 VerticalScrollBarVisibility="Auto" />
+
+                            <ui:Button
+                                Grid.Column="2"
+                                Margin="5,0,0,0"
+                                Padding="5"
+                                VerticalAlignment="Top"
+                                Appearance="Transparent"
+                                Click="OnCopyContentButtonClick"
+                                Tag="{Binding OutputText, Mode=OneWay}"
+                                ToolTip="Copy to clipboard">
+                                <ui:SymbolIcon Symbol="Copy24" />
+                            </ui:Button>
                         </Grid>
                     </Border>
                 </DataTemplate>
