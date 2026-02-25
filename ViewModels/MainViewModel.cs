@@ -32,10 +32,16 @@ public partial class MainViewModel(IViveToolAdapter adapter, IIdStringParser par
     [ObservableProperty]
     [NotifyCanExecuteChangedFor(nameof(RunCommand))]
     [NotifyCanExecuteChangedFor(nameof(AddCommand))]
+    [NotifyCanExecuteChangedFor(nameof(ClearCommand))]
+    [NotifyCanExecuteChangedFor(nameof(ReQueryAllCommand))]
+    [NotifyCanExecuteChangedFor(nameof(ReQueryRowCommand))]
     private bool _isBusy = false;
 
+    private bool CanInteract()
+        => !IsBusy;
+
     [RelayCommand(CanExecute = nameof(CanInteract))]
-    private void Add()
+    private async Task Add()
     {
         var ids = _parser.ParseIds(InputText);
         if (ids.Count == 0)
@@ -59,31 +65,30 @@ public partial class MainViewModel(IViveToolAdapter adapter, IIdStringParser par
         }
 
         // 自动执行查询动作
-        _ = RunQueryAsync([.. ids.Select(x => x.Id)]);
-
-        InputText = string.Empty; // 清空输入框
+        await RunQueryAsync([.. Instructions.Select(x => x.Id)]);
+        // 清空输入框
+        InputText = string.Empty;
     }
 
     [RelayCommand(CanExecute = nameof(CanInteract))]
     private async Task Run()
     {
+        if (Instructions.Count == 0)
+            return;
+
         IsBusy = true;
-        var executableRows = Instructions
+        try
+        {
+            var executableRows = Instructions
             .Where(r => r.Action is ActionType.Enable or ActionType.Reset)
             .ToList();
 
-        if (executableRows.Count > 0)
-            await _adapter.ExecuteBatchAsync(executableRows);
-        IsBusy = false;
-    }
-
-    private async Task RunQueryAsync(List<uint> ids)
-    {
-        // 简单的单个查询逻辑
-        foreach (var row in Instructions.Where(x => ids.Contains(x.Id)))
+            if (executableRows.Count > 0)
+                await _adapter.ExecuteBatchAsync(executableRows);
+        }
+        finally
         {
-            row.OutputText = "Querying...";
-            row.OutputText = await _adapter.QuerySingleAsync(row.Id);
+            IsBusy = false;
         }
     }
 
@@ -95,6 +100,47 @@ public partial class MainViewModel(IViveToolAdapter adapter, IIdStringParser par
     private void RemoveRow(InstructionRow row)
         => Instructions.Remove(row);
 
-    private bool CanInteract()
-        => !IsBusy;
+    [RelayCommand(CanExecute = nameof(CanInteract))]
+    private async Task ReQueryRowAsync(InstructionRow row)
+    {
+        if (row == null)
+            return;
+
+        IsBusy = true;
+        try
+        {
+            await RunQueryAsync([row.Id]);
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    [RelayCommand(CanExecute = nameof(CanInteract))]
+    private async Task ReQueryAllAsync()
+    {
+        if (Instructions.Count == 0)
+            return;
+
+        IsBusy = true;
+        try
+        {
+            await RunQueryAsync([.. Instructions.Select(x => x.Id)]);
+        }
+        finally
+        {
+            IsBusy = false;
+        }
+    }
+
+    private async Task RunQueryAsync(List<uint> ids)
+    {
+        // 简单的单个查询逻辑
+        foreach (var row in Instructions.Where(x => ids.Contains(x.Id)))
+        {
+            row.OutputText = "Querying...";
+            row.OutputText = await _adapter.QuerySingleAsync(row.Id);
+        }
+    }
 }

@@ -53,7 +53,6 @@
                 ItemsSource="{Binding ActionTypes}"
                 SelectedItem="{Binding SelectedAction}" />
 
-            <!--  使用 PlaceholderText 代替 ToolTip，更符合现代 UI  -->
             <ui:TextBox
                 Grid.Column="1"
                 VerticalAlignment="Center"
@@ -95,7 +94,7 @@
 
             <DataGrid.Columns>
                 <DataGridTextColumn
-                    Width="2*"
+                    Width="1*"
                     Binding="{Binding GetIdString}"
                     Header="ID &amp; Variant" />
 
@@ -117,25 +116,40 @@
                 </DataGridTemplateColumn>
 
                 <DataGridTextColumn
-                    Width="1.5*"
+                    Width="1*"
                     Binding="{Binding Status}"
                     Header="Status" />
 
                 <!--  操作列: 使用图标按钮  -->
                 <DataGridTemplateColumn
-                    Width="Auto"
+                    MinWidth="72"
                     Header="Ops">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ui:Button
-                                Padding="5"
-                                Appearance="Secondary"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Command="{Binding DataContext.RemoveRowCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                CommandParameter="{Binding}"
-                                Icon="{ui:SymbolIcon Delete24}"
-                                ToolTip="Remove" />
+                            <StackPanel Orientation="Horizontal">
+                                <!--  单行刷新按钮  -->
+                                <ui:Button
+                                    Margin="0,0,3,0"
+                                    Padding="5"
+                                    Appearance="Secondary"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Command="{Binding DataContext.ReQueryRowCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                    CommandParameter="{Binding}"
+                                    Icon="{ui:SymbolIcon ArrowSync24}"
+                                    ToolTip="Requery this ID" />
+
+                                <!--  删除按钮  -->
+                                <ui:Button
+                                    Padding="5"
+                                    Appearance="Secondary"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Command="{Binding DataContext.RemoveRowCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                    CommandParameter="{Binding}"
+                                    Icon="{ui:SymbolIcon Delete24}"
+                                    ToolTip="Remove this ID" />
+                            </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -143,7 +157,6 @@
 
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
-                    <!--  使用 CardControl 或者带有圆角的 Border  -->
                     <Border
                         Margin="10,5,10,10"
                         Padding="10"
@@ -188,7 +201,16 @@
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
 
-                <!--  清除按钮：次要操作  -->
+                <!--  刷新全部按钮  -->
+                <ui:Button
+                    MinWidth="100"
+                    Margin="0,0,10,0"
+                    Appearance="Secondary"
+                    Command="{Binding ReQueryAllCommand}"
+                    Content="Requery All"
+                    Icon="{ui:SymbolIcon ArrowSync24}" />
+
+                <!--  清除按钮  -->
                 <ui:Button
                     MinWidth="100"
                     Margin="0,0,10,0"
@@ -197,7 +219,7 @@
                     Content="Clear All"
                     Icon="{ui:SymbolIcon Dismiss24}" />
 
-                <!--  执行按钮：主要操作 (高亮显示)  -->
+                <!--  执行按钮  -->
                 <ui:Button
                     MinWidth="120"
                     Appearance="Primary"
