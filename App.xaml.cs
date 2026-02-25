@@ -11,8 +11,6 @@ namespace ViveGui;
 
 public partial class App : Application
 {
-    public static new App Current
-        => (App)Application.Current;
     public IServiceProvider? Services { get; private set; }
 
     protected override async void OnStartup(StartupEventArgs e)
@@ -21,8 +19,13 @@ public partial class App : Application
 
         // 1. 配置依赖注入
         var serviceCollection = new ServiceCollection();
-        ConfigureServices(serviceCollection);
-        Services = serviceCollection.BuildServiceProvider();
+        Services = serviceCollection
+            .AddSingleton<EnvironmentService>()
+            .AddSingleton<IViveToolAdapter, ViveToolAdapter>()
+            .AddSingleton<IIdStringParser, IdStringParser>()
+            .AddSingleton<MainViewModel>()
+            .AddSingleton<MainWindow>()
+            .BuildServiceProvider();
 
         // 2. 环境检测
         _ = Services.GetRequiredService<EnvironmentService>();
@@ -46,12 +49,4 @@ public partial class App : Application
         var mainWindow = Services.GetRequiredService<MainWindow>();
         mainWindow.Show();
     }
-
-    private static void ConfigureServices(IServiceCollection services)
-        => _ = services
-            .AddSingleton<EnvironmentService>()
-            .AddSingleton<IViveToolAdapter, ViveToolAdapter>()
-            .AddSingleton<IIdStringParser, IdStringParser>()
-            .AddSingleton<MainViewModel>()
-            .AddSingleton<MainWindow>();
 }
