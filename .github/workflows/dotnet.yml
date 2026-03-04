@@ -1,0 +1,66 @@
+name: Publish WPF Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    name: Build and Release
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.0.x' 
+
+
+      - name: Restore Dependencies
+        run: dotnet restore
+
+
+      - name: Publish and Rename
+        shell: pwsh
+        run: |
+          $runtimes = @("win-x64", "win-x86", "win-arm64")
+
+          $releaseDir = "./release-assets"
+          New-Item -ItemType Directory -Force -Path $releaseDir
+          
+          foreach ($rt in $runtimes) {
+              $outDir = "./bin/Release/net10.0-windows/$rt/publish"
+              dotnet publish --configuration Release --runtime $rt
+              $exeFile = Get-ChildItem -Path $outDir -Filter "*.exe" | Select-Object -First 1
+          
+              if ($exeFile) {
+                  $newName = "$($exeFile.BaseName)-$rt$($exeFile.Extension)"
+                  $destDir = Join-Path -Path $releaseDir -ChildPath $newName
+                  Copy-Item -Path $exeFile.FullName -Destination $destDir
+              }
+              else {
+                  Write-Error "在 $outDir 未找到 .exe 文件！"
+              }
+          }
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ./release-assets/*.exe
+          generate_release_notes: true
+
+
+
+
+
+
+
