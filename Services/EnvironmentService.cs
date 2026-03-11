@@ -2,11 +2,13 @@
 
 namespace ViveGui.Services;
 
-public class EnvironmentService
+public static class EnvironmentService
 {
-    public static bool IsVivetoolAvailable(out string errorMessage)
+    public static (bool Success, string ErrorMsg) IsVivetoolAvailable { get; }
+        = CheckVivetoolAvailability();
+
+    private static (bool Success, string ErrorMsg) CheckVivetoolAvailability()
     {
-        errorMessage = string.Empty;
         string pathEnv = Environment.GetEnvironmentVariable("PATH") ?? string.Empty;
         string[] paths = pathEnv.Split(Path.PathSeparator);
 
@@ -14,10 +16,10 @@ public class EnvironmentService
         {
             string fullPath = Path.Combine(path, "vivetool.exe");
             if (File.Exists(fullPath))
-                return true;
+                return (true, string.Empty);
         }
 
-        errorMessage = "Error: 'vivetool.exe' was not found in your PATH.\nPlease download it and add it to your system environment variables.";
-        return false;
+        string errorMessage = "Error: The program will not start since 'vivetool.exe' was not found in your PATH.\nPlease download it and add it to your PATH environment variable, then try again.";
+        return (false, errorMessage);
     }
 }

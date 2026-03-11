@@ -20,7 +20,6 @@ public partial class App : Application
         // 1. 配置依赖注入
         var serviceCollection = new ServiceCollection();
         Services = serviceCollection
-            .AddSingleton<EnvironmentService>()
             .AddSingleton<IViveToolAdapter, ViveToolAdapter>()
             .AddSingleton<IIdStringParser, IdStringParser>()
             .AddSingleton<MainViewModel>()
@@ -28,14 +27,14 @@ public partial class App : Application
             .BuildServiceProvider();
 
         // 2. 环境检测
-        _ = Services.GetRequiredService<EnvironmentService>();
-        if (!EnvironmentService.IsVivetoolAvailable(out string errorMsg))
+        if (EnvironmentService.IsVivetoolAvailable is { Success: false, ErrorMsg: var errorMsg })
         {
             var uiMessageBox = new Wpf.Ui.Controls.MessageBox
             {
                 Title = "ViVeTool Missing",
                 Content = errorMsg,
                 CloseButtonText = "OK",
+                CloseButtonAppearance = Wpf.Ui.Controls.ControlAppearance.Primary,
                 // 设置窗口居中显示，因为此时没有主窗口作为 owner
                 WindowStartupLocation = WindowStartupLocation.CenterScreen
             };
