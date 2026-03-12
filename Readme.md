@@ -14,6 +14,10 @@
 
 ![主界面](Readme.md.Assets/screenshot.png)
 
+未检测到 Vivetool.exe 时的提示界面，提供了指向 Vive 官方仓库的超链接。
+
+![未检测到 Vivetool.exe 的提示界面](Readme.md.Assets/screenshot2.png)
+
 ## 详细信息
 
 - 基本操作
@@ -32,7 +36,7 @@
     - 用户需要手动重新查询 ID 的最新状态，程序不会自动更新，但提供了相应操作按钮。
 ## 注意事项
 
-- 本程序未附带 ViveTool，用户需自行寻找、下载并配置 path 环境变量。当程序未能发现 vivetool.exe 时，会弹出提示并退出。
+- 本程序未附带 ViveTool，用户需自行寻找、下载并配置 path 环境变量。当程序未能发现 vivetool.exe 时，会弹出提示并退出。此提示中提供了指向 Vive 官方仓库的超链接，方便用户获取 ViveTool。
 - 本程序虽为单文件发布，但未包含运行时，用户需自行安装 .NET 10 Desktop 运行时。
 - 由于 ViveTool 的使用需获取管理员权限，本程序将首先自动请求该权限，以确保所有操作的顺利执行。
 
@@ -48,6 +52,7 @@
 - v1.3.0 增加重新查询 ID 状态的功能。
 - v1.3.1 增加复制 ViveTool 输出信息的功能
 - v1.3.2 更新检查 vivetool.exe 的方法，并调整未发现时的提示信息。
+- v1.3.3 继续优化检查 vivetool.exe 的方法，并丰富未发现时的提示信息，包括指向 Vive 官方仓库的超链接。
 
 ## 许可证
 [MIT](LICENSE.txt)

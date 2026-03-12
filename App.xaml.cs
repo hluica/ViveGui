@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -27,7 +28,7 @@ public partial class App : Application
             .BuildServiceProvider();
 
         // 2. 环境检测
-        if (EnvironmentService.IsVivetoolAvailable is { Success: false, ErrorMsg: var errorMsg })
+        if (EnvironmentService.IsVivetoolAvailable is TextBlock errorMsg)
         {
             var uiMessageBox = new Wpf.Ui.Controls.MessageBox
             {
