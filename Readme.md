@@ -1,5 +1,9 @@
 ﻿# ViveGui
 
+![GitHub Release](https://img.shields.io/github/v/release/hluica/ViveGui)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/hluica/ViveGui)
+
+
 轻量的 [Vivetool](https://github.com/thebookisclosed/ViVe) 图形前端，提供图形化的操作和信息显示。特点：
 - 从系统 path 环境变量查找 vivetool，实现前后端彻底分离。
 - 在提供图形化的操作结果显示的同时，保留了 vivetool 的命令行输出。
