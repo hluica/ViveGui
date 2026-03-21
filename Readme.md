@@ -57,6 +57,7 @@
 - v1.3.1 增加复制 ViveTool 输出信息的功能
 - v1.3.2 更新检查 vivetool.exe 的方法，并调整未发现时的提示信息。
 - v1.3.3 继续优化检查 vivetool.exe 的方法，并丰富未发现时的提示信息，包括指向 Vive 官方仓库的超链接。
+- v1.3.4 更新依赖。优化源代码结构；更新调用 MVVM Toolkit 的方式。
 
 ## 许可证
 [MIT](LICENSE.txt)

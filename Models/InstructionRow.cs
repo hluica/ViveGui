@@ -9,10 +9,10 @@ public partial class InstructionRow : ObservableObject
     public ActionType Action { get; set; }
 
     [ObservableProperty]
-    private string _outputText = "Initializing...";
+    public partial string OutputText { get; set; } = "Initializing...";
 
     [ObservableProperty]
-    private RowStatus _status = RowStatus.Initializing;
+    public partial RowStatus Status { get; set; } = RowStatus.Initializing;
 
     public string GetIdString
         => Variant.HasValue ? $"{Id} (Var: {Variant})" : $"{Id}";

@@ -23,9 +23,7 @@ public partial class MainWindow : FluentWindow
         if (sender is Button btn && btn.Content is SymbolIcon icon)
         {
             if (btn.Tag is not string textToCopy || string.IsNullOrWhiteSpace(textToCopy))
-            {
                 return;
-            }
 
             // 1. 记录按钮的原始状态，以便稍后恢复
             var originalSymbol = icon.Symbol;

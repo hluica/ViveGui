@@ -19,8 +19,7 @@ public partial class App : Application
         base.OnStartup(e);
 
         // 1. 配置依赖注入
-        var serviceCollection = new ServiceCollection();
-        Services = serviceCollection
+        Services = new ServiceCollection()
             .AddSingleton<IViveToolAdapter, ViveToolAdapter>()
             .AddSingleton<IIdStringParser, IdStringParser>()
             .AddSingleton<MainViewModel>()
@@ -36,7 +35,6 @@ public partial class App : Application
                 Content = errorMsg,
                 CloseButtonText = "OK",
                 CloseButtonAppearance = Wpf.Ui.Controls.ControlAppearance.Primary,
-                // 设置窗口居中显示，因为此时没有主窗口作为 owner
                 WindowStartupLocation = WindowStartupLocation.CenterScreen
             };
             _ = await uiMessageBox.ShowDialogAsync();

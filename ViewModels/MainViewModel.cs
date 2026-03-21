@@ -15,14 +15,14 @@ public partial class MainViewModel(IViveToolAdapter adapter, IIdStringParser par
     private readonly IIdStringParser _parser = parser;
 
     [ObservableProperty]
-    private ObservableCollection<InstructionRow> _instructions = [];
+    public partial ObservableCollection<InstructionRow> Instructions { get; set; } = [];
 
     [ObservableProperty]
-    private string _inputText = string.Empty;
+    public partial string InputText { get; set; } = string.Empty;
 
     // 绑定到下拉菜单的选定项
     [ObservableProperty]
-    private ActionType _selectedAction = ActionType.Query;
+    public partial ActionType SelectedAction { get; set; } = ActionType.Query;
 
     // 提供给下拉菜单的数据源
     public static IEnumerable<ActionType> ActionTypes
@@ -35,7 +35,7 @@ public partial class MainViewModel(IViveToolAdapter adapter, IIdStringParser par
     [NotifyCanExecuteChangedFor(nameof(ClearCommand))]
     [NotifyCanExecuteChangedFor(nameof(ReQueryAllCommand))]
     [NotifyCanExecuteChangedFor(nameof(ReQueryRowCommand))]
-    private bool _isBusy = false;
+    public partial bool IsBusy { get; set; } = false;
 
     private bool CanInteract()
         => !IsBusy;
