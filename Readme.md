@@ -1,6 +1,6 @@
 ﻿# ViveGui
 
-![GitHub Release](https://img.shields.io/github/v/release/hluica/ViveGui)
+[![GitHub Release](https://img.shields.io/github/v/release/hluica/ViveGui)](https://github.com/hluica/ViveGui/releases/latest)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/hluica/ViveGui)
 
 
