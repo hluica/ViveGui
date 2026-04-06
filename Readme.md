@@ -1,8 +1,9 @@
 ﻿# ViveGui
 
+[![.NET 10.0](https://img.shields.io/badge/.NET-10.0-512BD4)](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE.txt)
 [![GitHub Release](https://img.shields.io/github/v/release/hluica/ViveGui)](https://github.com/hluica/ViveGui/releases/latest)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/hluica/ViveGui)
-
 
 轻量的 [Vivetool](https://github.com/thebookisclosed/ViVe) 图形前端，提供图形化的操作和信息显示。特点：
 - 从系统 path 环境变量查找 vivetool，实现前后端彻底分离。
